@@ -54,3 +54,14 @@
   (all listed, not all measured); methodology reduced to EM-001 to EM-007 for small samples;
   invented scope removed or downgraded (error list, edge cases, timings, double submit,
   prompt-injection behavior); requirements renumbered. All items pass.
+- Validation iteration 4 (2026-11-24): third independent review (validation round). Changes:
+  EV-003 records draft citations, removed citations, error stage, retrieval before the
+  minimum-score filter, and the original file name as join key, in an isolated knowledge
+  base; EV-005 defines the trace export script and per-element presence flags; EV-006 adds
+  citation-support labels and a separate template file; catalogue conventions for
+  population, missing positions, relevance, and averaging; MC-006 unavailable; MC-011 split
+  into validity (script) and support (labels); the metrics file holds run metadata, test
+  results, and success-criterion verdicts so the self-check covers every reported number;
+  the safe response is exact, with optional "Related passages" and "Uncertain or missing"
+  sections and a status mapping; indexing and retrieval failure messages restored; the
+  skill reads Langfuse exports only. All items pass.

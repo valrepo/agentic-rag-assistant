@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.1.0 (MINOR: guidance materially expanded after two independent
+- Version change: 1.0.0 → 1.1.0 (MINOR: guidance materially expanded after three independent
   reviews of the requirements).
 - Modified principles:
   - I. Specification-First Workflow: the four files live in top-level `specs/` before any
@@ -165,8 +165,10 @@ environment.
   and to distinguish evidence from uncertainty.
 - A hallucination guardrail MUST check every answer before it is shown:
   - evidence sufficiency is decided at answer level by the Answer/Verifier agent (plus a
-    configurable minimum retrieval score); when the evidence is insufficient, the user MUST
-    receive exactly the safe response "I could not find this in the uploaded knowledge.";
+    configurable minimum retrieval score); when the evidence is insufficient, the answer
+    text MUST be exactly "I could not find this in the uploaded knowledge.", optionally
+    followed by a separate, clearly labelled list of related passages with no generated
+    statement;
   - otherwise, statements not supported by the retrieved chunks MUST be removed or
     explicitly marked as uncertain, and the answer MUST NOT present them as facts.
 - When evidence is available, the answer MUST include citations referencing source file and
@@ -258,9 +260,10 @@ manual test procedure.
     resource usage.
   - **Safety / privacy**: prompt-injection detection rate, data leakage checks, secret
     exposure, PII handling.
-- It MUST follow the metric catalogue and the evaluation methodology defined in the
-  specification. Not every metric has to be measured: every metric MUST be listed with a
-  status (measured, unavailable, or not applicable) and a reason.
+- It MUST follow the evaluation data contract, the metric catalogue, and the evaluation
+  methodology defined in the specification. Not every metric has to be measured: every
+  metric MUST be listed with a status (measured by script, measured from human labels,
+  unavailable, or not applicable) and a reason.
 - Metrics and Langfuse data MUST NOT be fabricated: numbers MUST be produced by the skill's
   deterministic scripts or come from human labels, never computed or estimated by the agent;
   the report MUST pass a mechanical self-check before it is handed back. Any metric that
@@ -268,8 +271,8 @@ manual test procedure.
   The report MUST include limitations, data-quality concerns, privacy considerations, and
   recommended next experiments.
 - The skill MUST be read-only outside `reports/` and `evaluation/labels/`, MUST NOT run the
-  application, tests, or evaluation runner, and MUST NOT read `.env` files or print
-  credentials.
+  application, tests, evaluation runner, or trace export, MUST NOT query Langfuse directly,
+  and MUST NOT read `.env` files (other than `.env.example`) or print credentials.
 
 *Verified by*: skill frontmatter review; report review against available evidence.
 
@@ -330,7 +333,7 @@ the full stack, check CrewAI's supported Python range), then amend this table (P
 
 **In scope (v1)**
 
-- Tab A: multi-file upload (`.txt`, `.pdf`, and `.md`), per-file status,
+- Tab A: multi-file upload (`.txt` and `.pdf`; `.md` SHOULD), per-file status,
   parse/chunk/embed/store, clear success or error messages.
 - Tab B: question input, processing state, cited answer, safe "not found" response.
 - CrewAI sequential crew (Retriever + Answer/Verifier) with hallucination guardrail.

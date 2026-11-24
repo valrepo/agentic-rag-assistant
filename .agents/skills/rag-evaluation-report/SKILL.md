@@ -50,15 +50,15 @@ Read what exists; record what is missing. Do not modify any of these files.
 | Evaluation run results | `evaluation/results/`, or the path given as argument; note for each file whether it comes from the fake model or a real model |
 | Automated test results | `reports/test-results/` |
 | Application configuration | `.env.example`, `pyproject.toml`, configuration module defined in `plan.md` (never read or print `.env` values) |
-| Langfuse trace summaries | `reports/langfuse/`, the path given as argument, or, if Langfuse credentials are configured in the environment, read-only queries through the `langfuse` skill |
+| Langfuse trace summaries | `reports/langfuse/<run_id>/` exports only (EV-005); never query Langfuse directly |
 
 For each source, note: found / not found, path, timestamp, and number of records.
 
 ## Step 2 - Decide which metrics apply
 
-Go through the catalogue below. For each metric decide: **measured** (value computed from
-evidence), **unavailable** (applicable but not computable now), or **not applicable**
-(explain why). Use the definitions given; if `k` is used, state its value from configuration.
+Go through the catalogue below. For each metric decide: **measured (script)**, **measured
+(human labels)**, **unavailable** (applicable but no evidence for the selected run), or
+**not applicable** (explain why). Use the definitions given; if `k` is used, state its value from configuration.
 
 Apply the metric catalogue (MC-001 to MC-032) and the Evaluation Methodology (EM-001 to EM-007) in `specs/spec.md`. In short:
 
@@ -78,7 +78,8 @@ Apply the metric catalogue (MC-001 to MC-032) and the Evaluation Methodology (EM
 
 - Recall@k: share of expected source documents found in the top k.
 - Precision@k: share of the top k chunks that come from an expected source.
-- Hit Rate@k: share of answerable questions with at least one expected source in the top k.
+- Hit Rate@k: share of questions expecting an answer (answerable and multi-source) with at
+  least one expected source in the top k.
 - MRR: mean of 1 / rank of the first relevant chunk (0 if none).
 - nDCG@k: discounted cumulative gain of relevant chunks, normalized by the ideal ranking.
 - Context relevance: share of retrieved chunks judged relevant to the question (needs a
@@ -116,12 +117,14 @@ Apply the metric catalogue (MC-001 to MC-032) and the Evaluation Methodology (EM
 **Safety / privacy**
 
 - Prompt-injection detection rate (needs injection test cases), data leakage checks, secret
-  exposure (scan traces, logs, and tracked files for keys), PII handling.
+  exposure (scan tracked files and exported traces; report file, line, pattern name only),
+  PII handling.
 
 ## Step 3 - Compute
 
-- Compute only from the collected evidence. Show the formula and the inputs (counts) for
-  each measured value, so the reader can recompute it.
+- Never compute, estimate, or round a value yourself: all numbers come from the skill's
+  scripts (`reports/rag-evaluation-metrics.json`, SK-004 and SK-005). Until those scripts
+  exist, every metric is reported as unavailable.
 - Report per-question results for the evaluation dataset (question id, category, expected
   sources, retrieved sources, cited sources, abstained or not, points covered).
 - State numerator and denominator for every rate. Below 10 questions, use counts and say
