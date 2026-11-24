@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Secrets and local config (constitution principle V)
+.env
+.env.*
+!.env.example
+
+# Vector store, uploads, model caches (constitution principle V)
+storage/
+uploads/
+chroma/
+.cache/
+models/
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
+
+# Claude Code local settings (Spec Kit skills in .claude/skills/ are committed)
+.claude/settings.local.json
