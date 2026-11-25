@@ -1,0 +1,24 @@
+# Runs the Streamlit application in a container (ADR-0003).
+# Prerequisites on the host: Ollama running with the model pulled, and a .env file
+# created from .env.example (Langfuse keys). Start with: docker compose up --build
+services:
+  app:
+    build: .
+    image: agentic-rag-assistant:local
+    env_file: .env
+    environment:
+      # Ollama runs on the host, not in the container (ADR-0001).
+      LLM_BASE_URL: http://host.docker.internal:11434
+      DATA_DIR: /data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${APP_PORT:-8501}:8501"
+    volumes:
+      - rag-data:/data
+      - embedding-cache:/root/.cache/chroma
+    restart: unless-stopped
+
+volumes:
+  rag-data:
+  embedding-cache:
