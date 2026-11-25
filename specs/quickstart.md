@@ -68,13 +68,14 @@ statuses. Save its trace id or a screenshot in `reports/langfuse/`.
 ## 6. Evaluation run and trace export (US4)
 
 ```sh
+uv run python scripts/run_evaluation.py --model-kind fake
 uv run python scripts/run_evaluation.py --model-kind real
-uv run python scripts/export_traces.py --run <run_id>
+uv run python scripts/export_traces.py --run <real run_id>
 ```
 
-Expected: `evaluation/results/<run_id>.jsonl` follows
-[contracts/evaluation-data.md](contracts/evaluation-data.md) (header plus five question
-records with trace ids); `reports/langfuse/<run_id>/` contains one JSON file per trace with
+Expected: two files `evaluation/results/<run_id>.jsonl` (`model_kind` `fake` and `real`)
+follow [contracts/evaluation-data.md](contracts/evaluation-data.md) (header plus five
+question records; trace ids in the real run); `reports/langfuse/<run_id>/` contains one JSON file per trace with
 presence flags. Optional: fill `evaluation/labels/<run_id>.jsonl` from the template written
 by the skill.
 

@@ -52,8 +52,9 @@ onnxruntime 1.32.0 (Chroma's default embedding), opentelemetry-sdk 1.45.2.
 
 ## R4. Embeddings and vector store
 
-- **Decision**: ChromaDB `PersistentClient` in `storage/chroma/` (git-ignored), one
-  collection with cosine distance; relevance score = 1 - cosine distance. Embeddings with
+- **Decision**: ChromaDB `PersistentClient` in `storage/chroma/` (git-ignored), created with
+  `Settings(anonymized_telemetry=False)` (telemetry is on by default in chromadb 1.5.9,
+  verified), one collection with cosine distance; relevance score = 1 - cosine distance. Embeddings with
   Chroma's default ONNX `all-MiniLM-L6-v2` (384 dimensions, CPU, about 80 MB downloaded on
   first use into `~/.cache/chroma`; verified working).
 - **Rationale**: local, no service to run, no torch; CrewAI already depends on chromadb.
@@ -105,7 +106,11 @@ onnxruntime 1.32.0 (Chroma's default embedding), opentelemetry-sdk 1.45.2.
   Verified on crewai 1.15.45: the completed event carries `model`, `messages`, `response`,
   and `usage`. This is the single source of generation observations, so it works for every
   provider and also for the StubLLM, which emits the same events (the SC-007 test double
-  therefore sees generations). `OpenAIInstrumentor` is not used: it would only see
+  therefore sees generations). Verified in crewai 1.15.45: synchronous handlers run later
+  in a thread pool with a copy of the emitting context, so the listener pairs events by
+  `call_id`, takes the parent span captured at emission, and the run calls
+  `crewai_event_bus.flush()` before ending the root observation and flushing Langfuse.
+  `OpenAIInstrumentor` is not used: it would only see
   OpenAI-SDK providers, would miss the StubLLM, and would duplicate generations and tokens.
 - Per question: a root observation `rag-question` created with
   `start_as_current_observation`, inside `propagate_attributes(session_id=request_id,
