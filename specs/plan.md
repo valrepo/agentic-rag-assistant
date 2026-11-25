@@ -22,7 +22,7 @@ honest evaluation report. Details: [research.md](research.md).
 **Language/Version**: Python 3.13 (`>=3.13,<3.14`; CrewAI does not support 3.14)
 
 **Primary Dependencies**: crewai 1.15, langfuse 5.2, openinference-instrumentation-crewai
-1.1, openinference-instrumentation-openai 0.1, streamlit 1.67, chromadb 1.5 (ONNX
+1.1, streamlit 1.67, chromadb 1.5 (ONNX
 `all-MiniLM-L6-v2` embeddings), pypdf 7.1, python-dotenv 1.2; LLM served by a local Ollama
 (`llama3.1:8b`, ADR-0001)
 
@@ -109,7 +109,7 @@ app/
 ├── retrieval.py         # search -> RetrievedChunk list (k, scores, above_min_score)
 ├── crew.py              # agents, tasks, search tool (result_as_answer), AnswerDraft
 ├── guardrail.py         # deterministic FR-018/FR-020 rules -> Answer
-├── observability.py     # Langfuse client, instrumentors, trace_question(), no-op tracer
+├── observability.py     # Langfuse client, CrewAI instrumentor, LLM event listener, trace_question(), no-op tracer
 ├── service.py           # KnowledgeService, AnswerService, build_services()
 └── ui.py                # Streamlit tabs (no direct Chroma/CrewAI/Langfuse calls)
 
@@ -162,11 +162,20 @@ self-contained under `.agents/skills/` with its own scripts and fixtures, tested
    structured output; fallback `qwen2.5:7b` (ADR-0001).
 3. **One trace per question** (FR-024): `AnswerService.ask()` wraps the crew in
    `trace_question(request_id, question)`, which opens the root observation inside
-   `propagate_attributes(session_id=request_id)`, adds the retriever child observation,
+   `propagate_attributes(session_id=request_id, trace_name="rag-question")`, adds the
+   retriever child observation, receives generation observations from the CrewAI LLM event
+   listener (research R7),
    records the guardrail decision and status, returns the trace id, and flushes.
 4. **Tests never touch the network**: StubLLM, lexical fake embeddings, and either the no-op
    tracer or a Langfuse client with an in-memory span exporter (SC-007 test double).
-5. **The evaluation skill does no arithmetic**: scripts produce the metrics file; the agent
+5. **Fake-mode evaluation reuses the test doubles**: `scripts/run_evaluation.py --model-kind
+   fake` imports the StubLLM and the lexical fake embeddings from `tests/fakes/` (a package
+   of the repository, development only). No copy of the fakes lives in `app/`; the real
+   mode never imports `tests/`.
+6. **Configuration in tests never reads `.env`**: `Config.from_env(env=...)` with an
+   explicit mapping skips the `.env` file; test fixtures always pass a mapping, with a
+   minimum relevance score suited to the lexical fake embeddings.
+7. **The evaluation skill does no arithmetic**: scripts produce the metrics file; the agent
    fills the template from it; `check_report.py` gates the hand-back.
 
 ## Complexity Tracking

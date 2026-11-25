@@ -21,7 +21,6 @@ Resolved together with `uv` and imported successfully:
 | crewai | `>=1.15,<2` | 1.15.45 |
 | langfuse | `>=5.2,<6` | 5.2.0 |
 | openinference-instrumentation-crewai | `>=1.1.30,<2` | 1.1.30 |
-| openinference-instrumentation-openai | `>=0.1.77,<0.2` | 0.1.77 |
 | streamlit | `>=1.67,<2` | 1.67.0 |
 | chromadb | `>=1.5,<2` | 1.5.9 |
 | pypdf | `>=7.1,<8` | 7.1.1 |
@@ -96,10 +95,18 @@ onnxruntime 1.32.0 (Chroma's default embedding), opentelemetry-sdk 1.45.2.
 
 - **Decision**: Langfuse Python SDK v5 (OpenTelemetry based) with Langfuse Cloud
   (`LANGFUSE_BASE_URL=https://cloud.langfuse.com`, keys in `.env`). Instrumentation:
-  `CrewAIInstrumentor` (agent and task spans) and `OpenAIInstrumentor` (generation spans with
-  model name and token usage, since CrewAI's Ollama route uses the OpenAI SDK). Both are
-  OpenInference scopes, which Langfuse v5 exports by default (verified:
-  `KNOWN_LLM_INSTRUMENTATION_SCOPE_PREFIXES` contains `openinference`).
+  `CrewAIInstrumentor` (agent and task spans), an OpenInference scope that Langfuse v5
+  exports by default (verified: `KNOWN_LLM_INSTRUMENTATION_SCOPE_PREFIXES` contains
+  `openinference`).
+- Generations: a CrewAI event listener (`BaseEventListener`) in `app/observability.py`
+  turns `LLMCallStartedEvent` / `LLMCallCompletedEvent` / `LLMCallFailedEvent` into Langfuse
+  observations of type `generation` under the current trace, with model name, input and
+  output messages, token usage (`usage` field of the completed event), latency, and status.
+  Verified on crewai 1.15.45: the completed event carries `model`, `messages`, `response`,
+  and `usage`. This is the single source of generation observations, so it works for every
+  provider and also for the StubLLM, which emits the same events (the SC-007 test double
+  therefore sees generations). `OpenAIInstrumentor` is not used: it would only see
+  OpenAI-SDK providers, would miss the StubLLM, and would duplicate generations and tokens.
 - Per question: a root observation `rag-question` created with
   `start_as_current_observation`, inside `propagate_attributes(session_id=request_id,
   trace_name="rag-question")`; the retrieval is a child observation of type `retriever` with

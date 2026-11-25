@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.1.0 → 1.2.0 (1.1.0 MINOR: guidance materially expanded after three independent
+- Version change: 1.0.0 → 1.1.0 → 1.2.0 → 1.2.1 (1.1.0 MINOR: guidance materially expanded after three independent
   reviews of the requirements).
 - Modified principles:
   - I. Specification-First Workflow: the four files live in top-level `specs/` before any
@@ -27,6 +27,9 @@ Sync Impact Report
 - 1.1.0 → 1.2.0 (MINOR, during /speckit-plan): Technology Baseline filled with verified
   versions; out-of-scope wording clarified so that a user-installed local Ollama server is
   an external prerequisite (ADR-0001); Chroma and ONNX embeddings recorded (ADR-0002).
+- 1.2.0 → 1.2.1 (PATCH, after /speckit-analyze): `openinference-instrumentation-openai`
+  removed from the Technology Baseline; generation observations come from a CrewAI LLM event
+  listener instead (research R7), which also covers the deterministic fake LLM.
 - Deferred TODOs: none.
 -->
 
@@ -311,7 +314,6 @@ resolving and importing the full stack with `uv` on macOS arm64 (see `specs/rese
 | crewai | `>=1.15,<2` | 1.15.45 |
 | langfuse (Python SDK) | `>=5.2,<6` | 5.2.0 |
 | openinference-instrumentation-crewai | `>=1.1.30,<2` | 1.1.30 |
-| openinference-instrumentation-openai | `>=0.1.77,<0.2` | 0.1.77 |
 | streamlit | `>=1.67,<2` | 1.67.0 |
 | chromadb (local vector store, ADR-0002) | `>=1.5,<2` | 1.5.9 |
 | Embedding model (ADR-0002) | Chroma default ONNX `all-MiniLM-L6-v2` | onnxruntime 1.32.0 |
@@ -420,4 +422,4 @@ The deliverables MUST include:
 - **Compliance review**: before delivery, run
   `/speckit-analyze` and confirm every Quality Gate.
 
-**Version**: 1.2.0 | **Ratified**: 2026-11-24 | **Last Amended**: 2026-11-24
+**Version**: 1.2.1 | **Ratified**: 2026-11-24 | **Last Amended**: 2026-11-25
