@@ -41,3 +41,32 @@ The model name is recorded in each evaluation run header and the Ollama version 
 README prerequisites; outputs are
 not bit-for-bit reproducible across machines, which is already handled by the fake model in
 automated tests.
+
+## Validation (spike, 2026-11-25)
+
+Task T012 ran the real two-agent crew (`app/crew.py`) on `ollama/llama3.1:8b` (Ollama
+0.33.3, macOS arm64, 16 GB RAM) over the three sample documents indexed with the ONNX
+embeddings, for three questions: one single-source, one unanswerable, one multi-source.
+
+| Check | Result |
+|---|---|
+| Tool calling (`search_knowledge_base`, `result_as_answer`) | called once in 3/3 runs |
+| Structured output (`AnswerDraft`) on the first attempt | 3/3, no guardrail retry |
+| Unanswerable question | exact safe response (top retrieval score 0.08) |
+| Multi-source question | answered with citations to both expected files |
+| Invalid citations removed by the guardrail | 0 |
+| End-to-end latency, warm model | 2.7 s to 8.9 s (first cold run 24 s) |
+
+Decision: `llama3.1:8b` stays the default; the fallback `qwen2.5:7b` was not needed.
+
+Findings applied to the code:
+
+- CrewAI rejects a task guardrail whose return annotation is a string (postponed
+  annotations); the guardrail function has no return annotation.
+- The LLM instance is shared across questions and its token counters are cumulative; the
+  crew reports the per-run delta (`UsageMetrics.delta_since`).
+- For Ollama, CrewAI logs that the input token count is approximated (one token per four
+  characters); prompt token figures are therefore estimates, to be stated in the
+  evaluation report.
+
+The throwaway spike script was deleted after this record.

@@ -87,6 +87,15 @@ Expected: `reports/rag-evaluation-report.md`, `reports/rag-evaluation-metrics.js
 `reports/rag-evaluation-evidence.json` are written; the self-check passes; all 32 metrics are
 listed with a status; label-based metrics are "unavailable" until labels exist.
 
+## 7b. Optional: application in Docker Compose
+
+```sh
+docker compose up --build -d
+```
+
+Expected: http://localhost:8501 (or `APP_PORT`) serves the UI; with Ollama running on the
+host, scenarios 3 to 5 behave as with the native setup (ADR-0003).
+
 ## 8. Delivery check
 
 ```sh

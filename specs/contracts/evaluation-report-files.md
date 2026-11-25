@@ -78,5 +78,7 @@ Section order (SK-010), from `templates/rag-evaluation-report.template.md`:
 Exit code 0 only if: every number in sections 3 to 6 and 10 appears in the metrics file;
 every trace id appears in the evidence; every `unavailable` row has no value and a
 collection plan; all 32 ids are present; no fake run id appears outside section 9; no run of
-12 or more consecutive words is copied from an `answer` field of the result files or from a
-chunk text in the Langfuse exports (SK-011).
+12 or more consecutive words is copied from an `answer` field of the result files (SK-011).
+Chunk text is never present in the evaluation files the skill reads: the result files keep
+only chunk metadata, and the Langfuse exports keep only observation metadata (EV-005), so
+answers are the only text the report could copy.

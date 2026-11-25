@@ -24,7 +24,11 @@ honest evaluation report. Details: [research.md](research.md).
 **Primary Dependencies**: crewai 1.15, langfuse 5.2, openinference-instrumentation-crewai
 1.1, streamlit 1.67, chromadb 1.5 (ONNX
 `all-MiniLM-L6-v2` embeddings), pypdf 7.1, python-dotenv 1.2; LLM served by a local Ollama
-(`llama3.1:8b`, ADR-0001)
+(`llama3.1:8b`, ADR-0001). Resolved in `uv.lock` (2026-11-25): crewai 1.15.45, langfuse
+5.2.0, openinference-instrumentation-crewai 1.1.30, streamlit 1.67.0, chromadb 1.5.9,
+pypdf 7.1.1, python-dotenv 1.2.4, pytest 9.2.0, ruff 0.17.6, identical to research R2.
+`llama3.1:8b` was validated by the T012 spike (ADR-0001, section "Validation"); the
+fallback model was not needed. `MIN_RELEVANCE_SCORE` default tuned to 0.35 (T046).
 
 **Storage**: ChromaDB persistent directory `storage/chroma/` and uploaded files in
 `storage/uploads/` (both git-ignored); evaluation and report files as JSON Lines / JSON /
@@ -56,7 +60,7 @@ questions, about 15 Python modules
 
 | Principle / Gate | Status | Evidence in this plan |
 |---|---|---|
-| I. Specification-first | pass | constitution, spec, plan committed before code; `tasks.md` next; 4 spec iterations in git and checklist |
+| I. Specification-first | pass | constitution, spec, plan, and tasks committed before code; 4 spec iterations in git and checklist |
 | II. Fixed stack | pass with ADR | Python, CrewAI, Langfuse, Streamlit, local Chroma; Ollama default recorded in ADR-0001, Chroma and embeddings in ADR-0002; CrewAI and Langfuse skills in `.claude/skills/` with `SKILLS-SOURCES.md` |
 | III. Separation of concerns | pass | module layout below; UI calls `app/service.py` only; only `app/observability.py` configures Langfuse and instrumentation |
 | IV. Reproducibility | pass | `uv.lock`, `.python-version`, versions in Technical Context and Technology Baseline; run header records model, embedding model, parameters, commit |
@@ -69,7 +73,7 @@ questions, about 15 Python modules
 | XI. Error handling | pass | domain errors table in [contracts/app-service.md](contracts/app-service.md) |
 | XII. Honest evaluation | pass | skill structure, metrics file, self-check, read-only rules in [contracts/evaluation-report-files.md](contracts/evaluation-report-files.md) |
 | XIII. Security and privacy | pass | file-name sanitization, size limit, secret scan, no credentials in exports |
-| XIV. Simplicity | pass | no Flow, no LLM judge, no web framework besides Streamlit, no Docker requirement |
+| XIV. Simplicity | pass | no Flow, no LLM judge, no web framework besides Streamlit; Docker Compose is optional and runs only the app (ADR-0003) |
 | Scope: "self-managed LLM server" out of scope | pass with ADR | Ollama is an external prerequisite, not built or deployed by the project (ADR-0001); constitution amended to say so |
 
 Re-check after Phase 1 design: all rows still pass; no Complexity Tracking entry needed.
@@ -94,7 +98,7 @@ specs/
 │   └── ui.md
 ├── checklists/requirements.md
 └── tasks.md             # Phase 2 output (/speckit-tasks)
-docs/adr/                # 0001 Ollama, 0002 Chroma + ONNX embeddings
+docs/adr/                # 0001 Ollama, 0002 Chroma + ONNX embeddings, 0003 Docker Compose
 ```
 
 ### Source Code (repository root)
@@ -113,10 +117,13 @@ app/
 ├── service.py           # KnowledgeService, AnswerService, build_services()
 └── ui.py                # Streamlit tabs (no direct Chroma/CrewAI/Langfuse calls)
 
+Dockerfile, compose.yaml, .dockerignore   # optional container for the app (ADR-0003)
+
 scripts/
 ├── run_evaluation.py    # EV-003 runner (isolated knowledge base per run)
 ├── export_traces.py     # EV-005 Langfuse export (read-only)
 ├── make_sample_pdf.py   # builds the sample PDF from its text (stdlib only)
+├── sample_sources/      # source text of the sample PDF and of the test PDFs
 └── package_submission.py# archive with dereferenced skill links, no secrets
 
 data/sample-knowledge/   # 3 documents written for the project (.md, .txt, .pdf)
@@ -136,7 +143,8 @@ evaluation/
 
 tests/
 ├── conftest.py          # env vars, network block, fixtures
-├── fakes/               # stub_llm.py (official CrewAI testing skill), fake_embeddings.py, memory_tracer.py
+├── fakes/               # stub_llm.py (official CrewAI testing skill), fake_answerer.py (deterministic
+│                        # extractive answers for the StubLLM), fake_embeddings.py, memory_tracer.py
 ├── data/                # small test files (empty.txt, image.png, invalid.pdf, ...)
 ├── unit/                # ingestion, knowledge base, retrieval, guardrail, config, observability
 ├── integration/         # crew with StubLLM, service end to end, smoke test

@@ -14,7 +14,7 @@ committed). `.env.example` lists every name below with an empty or placeholder v
 | CHUNK_SIZE | `800` | characters |
 | CHUNK_OVERLAP | `120` | characters |
 | RETRIEVAL_K | `5` | chunks returned by the retriever |
-| MIN_RELEVANCE_SCORE | `0.3` | below this, a chunk does not count as evidence (starting value; tuned on the ONNX embeddings in task T046 and recorded in the run header) |
+| MIN_RELEVANCE_SCORE | `0.35` | below this, a chunk does not count as evidence (tuned on the ONNX embeddings in task T046, see `evaluation/README.md`; recorded in the run header) |
 | MAX_UPLOAD_MB | `10` | per file |
 | MAX_QUESTION_CHARS | `1000` | |
 | LANGFUSE_ENABLED | `true` | `false` gives a no-op tracer |
