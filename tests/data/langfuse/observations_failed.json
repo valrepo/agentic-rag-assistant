@@ -1,0 +1,4 @@
+[
+  {"id": "f1", "trace_id": "t-fail", "type": "SPAN", "name": "rag-question", "is_root_observation": true, "parent_observation_id": null, "session_id": "req-fail", "level": "DEFAULT", "status_message": "failed", "start_time": "2026-11-25T10:01:00Z", "end_time": "2026-11-25T10:01:02Z", "latency": 2.0, "input": {"question": "q", "request_id": "req-fail"}, "output": {"status": "failed"}},
+  {"id": "f2", "trace_id": "t-fail", "type": "GENERATION", "name": "llm-call: Retriever/Researcher", "parent_observation_id": "f1", "level": "ERROR", "status_message": "connection refused", "start_time": "2026-11-25T10:01:00Z", "end_time": null, "latency": null, "model": "ollama/llama3.1:8b", "input": [{"role": "user", "content": "q"}], "output": null, "usage_details": null}
+]

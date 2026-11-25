@@ -1,0 +1,5 @@
+{"id": "q1", "category": "answerable", "question": "What PSI value fires a data drift alert, and how often are the model-health dashboards reviewed?"}
+{"id": "q2", "category": "answerable", "question": "How quickly must a SEV1 incident be acknowledged, and when is the post-mortem due?"}
+{"id": "q3", "category": "answerable", "question": "How long are raw training data and inference logs retained?"}
+{"id": "q4", "category": "unanswerable", "question": "What is the company's parental leave policy?"}
+{"id": "q5", "category": "multi_source", "question": "What should the on-call engineer do when a data drift alert fires?"}
