@@ -641,8 +641,8 @@ project when the evidence defined above exists (SK-009). Conventions for the for
 - The technology stack is fixed by the constitution: Python, CrewAI for the agent workflow,
   Langfuse for observability, Streamlit for the UI, with a local vector store and local
   embeddings; exact versions and the default model provider are decided in `plan.md`.
-- A hosted model provider is reachable from the evaluator's machine for real runs, and the
-  evaluator supplies their own API key; automated tests use a deterministic fake model.
+- Real runs use a local model served by Ollama, installed by the evaluator (no API key); a
+  hosted provider can be configured instead. Automated tests use a deterministic fake model.
 - Langfuse is used either as Langfuse Cloud or a local self-hosted instance, chosen during
   planning; the README documents the chosen option.
 - The evaluation skill is run with Claude Code; other agents may read
