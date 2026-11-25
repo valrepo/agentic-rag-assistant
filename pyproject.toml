@@ -1,0 +1,40 @@
+[project]
+name = "agentic-rag-assistant"
+version = "0.1.0"
+description = "Agentic RAG knowledge assistant with CrewAI, Langfuse, and Streamlit"
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "crewai>=1.15,<2",
+    "langfuse>=5.2,<6",
+    "openinference-instrumentation-crewai>=1.1.30,<2",
+    "streamlit>=1.67,<2",
+    "chromadb>=1.5,<2",
+    "pypdf>=7.1,<8",
+    "python-dotenv>=1.2,<2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2,<10",
+    "ruff>=0.17,<0.18",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = [".claude", ".specify", "tests/fakes/stub_llm.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = [
+    "integration: tests that run several components together",
+    "skill: tests of the rag-evaluation-report skill scripts",
+]

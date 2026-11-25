@@ -1,0 +1,32 @@
+INCIDENT RUNBOOK FOR ML SERVICES
+Lumenfield Labs, ML Platform team.
+
+1. SEVERITY LEVELS
+
+SEV1: a production model is down or returns wrong results for all users. The on-call
+engineer must acknowledge the page within 15 minutes and post an update every 30 minutes
+until the incident is resolved.
+
+SEV2: a production model is degraded, for example after a data drift alert or a latency
+breach. The on-call engineer must acknowledge the page within 1 hour.
+
+SEV3: a minor issue with no user impact. It is handled during working hours through the
+team ticket queue.
+
+2. FIRST STEPS FOR ANY INCIDENT
+
+Acknowledge the page in the paging tool. Open an incident channel named after the date and
+the model, and write a first status message describing the symptoms.
+
+3. ROLLING BACK A MODEL
+
+If a newly released model causes the incident, or if accuracy has dropped, roll back to the
+previous model version. In the model registry, select the previous version and use the
+action "promote previous". A rollback must be announced in the incident channel. After a
+rollback, the on-call engineer opens a retraining ticket for the ML team.
+
+4. CLOSING AN INCIDENT
+
+An incident is closed when the service is back within its objectives for one hour. Every
+SEV1 and SEV2 incident requires a written post-mortem within 5 business days. The
+post-mortem lists the timeline, the root cause, and at least one follow-up action.

@@ -1,0 +1,31 @@
+DATA RETENTION POLICY FOR MACHINE LEARNING
+Lumenfield Labs, Data Governance office. Version 3.
+
+1. Purpose
+
+This policy defines how long the data used and produced by machine learning systems is kept,
+and how it is deleted.
+
+2. Training data
+
+Raw training data is retained for 24 months after collection. After 24 months it is deleted
+from all storage locations, including backups, within the following 30 days.
+
+Personal data is pseudonymized before it is used for training. The pseudonymization keys are
+stored separately and are accessible only to the Data Governance office.
+DATA RETENTION POLICY FOR MACHINE LEARNING (continued)
+
+3. Inference logs
+
+Inference logs, which contain model inputs and predictions, are retained for 90 days. After
+90 days they are aggregated into daily statistics and the individual records are deleted.
+
+4. Model artifacts
+
+Model artifacts and their training metadata are kept in the model registry for 3 years
+after the model is retired, so that past predictions can be explained.
+
+5. Deletion requests
+
+Requests from a person to delete their data are processed within 30 days. The person is
+informed when the deletion is complete.
