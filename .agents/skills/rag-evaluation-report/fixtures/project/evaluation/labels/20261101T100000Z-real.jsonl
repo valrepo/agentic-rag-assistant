@@ -1,0 +1,2 @@
+{"id": "f1", "points_covered": ["f1-p1"], "claims_total": 2, "claims_supported": 2, "uncited_supported_claims": 0, "citations_checked": 1, "citations_supporting": 1, "answer_relevance": 4, "rubric_score": 4, "labeller": "QA"}
+{"id": "f3", "points_covered": ["f3-p1", "f3-p2"], "claims_total": 3, "claims_supported": 2, "uncited_supported_claims": 1, "citations_checked": 2, "citations_supporting": 1, "answer_relevance": 3, "rubric_score": 2, "labeller": "QA"}

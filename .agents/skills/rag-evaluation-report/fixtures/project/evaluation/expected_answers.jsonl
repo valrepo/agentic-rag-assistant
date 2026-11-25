@@ -1,0 +1,3 @@
+{"id": "f1", "expected_behavior": "answer", "answer_points": [{"point_id": "f1-p1", "text": "Alpha is first."}, {"point_id": "f1-p2", "text": "Alpha is checked daily."}], "expected_sources": ["a.md"]}
+{"id": "f2", "expected_behavior": "abstain", "answer_points": [], "expected_sources": []}
+{"id": "f3", "expected_behavior": "answer", "answer_points": [{"point_id": "f3-p1", "text": "Alpha starts."}, {"point_id": "f3-p2", "text": "Beta follows."}, {"point_id": "f3-p3", "text": "Both are logged."}], "expected_sources": ["a.md", "b.txt"]}

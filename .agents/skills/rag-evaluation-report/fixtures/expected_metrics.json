@@ -1,0 +1,136 @@
+{
+  "MC-001": {
+    "value": 1.0,
+    "numerator": 2,
+    "denominator": 2
+  },
+  "MC-002": {
+    "value": 0.75,
+    "n": 2
+  },
+  "MC-003": {
+    "value": 0.6667,
+    "n": 2
+  },
+  "MC-004": {
+    "value": 0.75,
+    "n": 2
+  },
+  "MC-005": {
+    "value": 0.6987,
+    "n": 2
+  },
+  "MC-008": {
+    "value": 0.8333,
+    "n": 2
+  },
+  "MC-009": {
+    "value": 3.5,
+    "n": 2
+  },
+  "MC-010": {
+    "value": 0.5,
+    "n": 2
+  },
+  "MC-011": {
+    "value": 0.5,
+    "numerator": 2,
+    "denominator": 4
+  },
+  "MC-012": {
+    "value": 0.75,
+    "n": 2
+  },
+  "MC-013": {
+    "value": 0.1667,
+    "n": 2
+  },
+  "MC-014": {
+    "value": 0.5833,
+    "n": 2
+  },
+  "MC-015": {
+    "value": 1.0,
+    "numerator": 3,
+    "denominator": 3
+  },
+  "MC-016": {
+    "value": 3.0,
+    "n": 2
+  },
+  "MC-017": {
+    "value": 1.0,
+    "numerator": 3,
+    "denominator": 3
+  },
+  "MC-018": {
+    "value": 0.0,
+    "numerator": 0,
+    "denominator": 3
+  },
+  "MC-019": {
+    "value": 1,
+    "n": 2
+  },
+  "MC-020": {
+    "value": 0.6667,
+    "numerator": 2,
+    "denominator": 3
+  },
+  "MC-022": {
+    "value": 2500,
+    "n": 3
+  },
+  "MC-023": {
+    "value": 390,
+    "n": 3
+  },
+  "MC-024": {
+    "value": 1.0,
+    "numerator": 3,
+    "denominator": 3
+  },
+  "MC-025": {
+    "value": 1200,
+    "n": 3
+  },
+  "MC-027": {
+    "value": 0.0,
+    "numerator": 0,
+    "denominator": 3
+  },
+  "_details": {
+    "MC-011_removed": 2,
+    "MC-011_support": 0.6667,
+    "MC-022_median": 1000,
+    "MC-023_cost": 0.001,
+    "MC-021_steps": {
+      "rag-question": {
+        "median_ms": 625,
+        "max_ms": 900
+      },
+      "generation: Answer/Verifier": {
+        "median_ms": 400,
+        "max_ms": 600
+      },
+      "search_knowledge_base": {
+        "median_ms": 45,
+        "max_ms": 50
+      }
+    },
+    "SC": {
+      "SC-003": "met",
+      "SC-004": "met",
+      "SC-005": "met",
+      "SC-006": "met",
+      "SC-007": "not met",
+      "SC-008": "met"
+    },
+    "tests": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 1,
+      "duration_s": 1.5
+    }
+  }
+}

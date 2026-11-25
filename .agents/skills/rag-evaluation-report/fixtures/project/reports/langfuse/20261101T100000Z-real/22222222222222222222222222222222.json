@@ -1,0 +1,47 @@
+{
+  "trace_id": "22222222222222222222222222222222",
+  "request_id": "r2",
+  "model": "ollama/llama3.1:8b",
+  "observations": [
+    {
+      "name": "rag-question",
+      "type": "span",
+      "status": "ok",
+      "duration_ms": 350,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "search_knowledge_base",
+      "type": "retriever",
+      "status": "ok",
+      "duration_ms": 40,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "llm-call: Answer/Verifier",
+      "type": "generation",
+      "status": "ok",
+      "duration_ms": 200,
+      "prompt_tokens": 50,
+      "completion_tokens": 5,
+      "cost": null
+    }
+  ],
+  "retry_count": 1,
+  "presence": {
+    "has_question": true,
+    "has_request_id": true,
+    "has_agent_task_spans": true,
+    "has_retrieval_metadata": true,
+    "has_generation_io": true,
+    "has_model_name": true,
+    "has_token_usage": true,
+    "has_latency_and_status": true,
+    "has_error_if_failed": true
+  },
+  "exported_at": "2026-11-01T11:00:00Z"
+}

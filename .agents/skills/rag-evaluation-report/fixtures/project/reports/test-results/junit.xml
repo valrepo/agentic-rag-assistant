@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites><testsuite name="pytest" errors="0" failures="0" skipped="1" tests="4" time="1.5">
+<testcase classname="tests.unit.test_chunking" name="test_a" time="0.1"/>
+<testcase classname="tests.integration.test_smoke" name="test_b" time="0.5"/>
+<testcase classname="tests.integration.test_crew_stub" name="test_c" time="0.4"/>
+<testcase classname="tests.integration.test_observability" name="test_d" time="0.5"><skipped message="demo"/></testcase>
+</testsuite></testsuites>

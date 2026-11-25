@@ -3,157 +3,118 @@ name: rag-evaluation-report
 description: >-
   Produce an honest Markdown evaluation report of the Agentic RAG Knowledge Assistant
   (retrieval, generation, task outcome, agent workflow, operations, safety/privacy) from the
-  project specs, test results, evaluation dataset and results, configuration, and available
-  Langfuse trace summaries. Invoked only when the user explicitly requests an evaluation
-  report, after the application has been implemented and tested.
+  project specs, test results, evaluation dataset and results, human labels, configuration,
+  and exported Langfuse trace summaries. Invoked only when the user explicitly requests an
+  evaluation report, after the application has been implemented and tested.
 user-invocable: true
 disable-model-invocation: true
-argument-hint: "[optional: path to evaluation results or Langfuse trace export]"
+argument-hint: "(no argument: the latest real-model run in evaluation/results/ is used)"
 ---
 
 # RAG Evaluation Report
 
-> Draft. The full skill (reference files, report template, deterministic scripts,
-> self-check, fixtures) is built during implementation as required by SK-004 to SK-011 in
-> `specs/spec.md`. Until then, this file only fixes the scope and the honesty rules.
-
 ## When this skill runs
 
-- This skill is invoked **only when the user explicitly requests an evaluation report**
-  (for example by typing `/rag-evaluation-report`).
-- It MUST NOT run automatically during coding, file upload, indexing, or question answering,
-  and MUST NOT be triggered by another skill or agent.
-- It is meant to run after the application has been implemented and the automated tests and
-  the evaluation dataset have been run. If they have not, say so in the report instead of
-  running the application yourself.
+- Only when the user explicitly requests an evaluation report, for example by typing
+  `/rag-evaluation-report`.
+- Never automatically during coding, file upload, indexing, or question answering, and never
+  triggered by another skill or agent.
+- It runs after the application has been implemented and the automated tests and the
+  evaluation runs have been made by the developer. If evidence is missing, report it as
+  missing; do not produce it yourself.
 
-## Golden rule: never fabricate
+## Golden rules
 
-- Every number in the report MUST come from a file or trace you actually read in this run.
-  Cite the source path (or trace id) next to each value.
-- If a metric cannot be computed from the available evidence, write **unavailable**, state
-  why (missing data, missing instrumentation, missing human labels, no Langfuse access), and
-  explain how to collect it.
-- Do not estimate, extrapolate, or "typical value" any metric. Do not invent Langfuse traces,
-  trace ids, latencies, token counts, or costs.
-- If two sources disagree, report both and flag the inconsistency.
+1. **Never fabricate.** Every number in the report comes from
+   `reports/rag-evaluation-metrics.json` or `reports/rag-evaluation-evidence.json`, written
+   by the scripts below. Never compute, estimate, extrapolate, or round a value yourself
+   (SK-005). Never invent a trace id, latency, token count, or cost.
+2. **Unavailable is an answer.** A metric without evidence is "unavailable", with the reason
+   and the collection plan from the metrics file.
+3. **Read-only outside `reports/` and `evaluation/labels/`** (SK-007). Do not run the
+   application, the tests, `scripts/run_evaluation.py`, or `scripts/export_traces.py`. Do
+   not query or write to Langfuse; read only the exports in `reports/langfuse/`. Do not
+   commit. Do not open `.env` or any `.env.*` file other than `.env.example`. Do not print
+   environment variables or credentials.
+4. **Privacy** (SK-011): quote questions if useful, never answers or chunk text; refer to
+   questions by id and to sources by file name. Details: `references/privacy.md`.
+5. Plain text, no emojis.
 
-## Step 1 - Collect evidence
+## References
 
-Read what exists; record what is missing. Do not modify any of these files.
+- `references/data-contract.md`: the files read and written, and their fields.
+- `references/metric-catalogue.md`: MC-001 to MC-032, formulas, default status, decision.
+- `references/methodology.md`: EM-001 to EM-007 (primary metric, small samples, slices).
+- `references/privacy.md`: read/write limits, secret scan patterns, PII text.
+- `templates/rag-evaluation-report.template.md`: the report structure (14 sections).
 
-| Evidence | Where to look |
-|---|---|
-| Constitution | `specs/constitution.md` |
-| Specification, plan, tasks | `specs/spec.md` (including the evaluation data contract EV-001 to EV-006, the skill requirements SK-001 to SK-011, the metric catalogue MC-001 to MC-032, and the Evaluation Methodology EM-001 to EM-007), `specs/plan.md`, `specs/tasks.md` |
-| Evaluation dataset | `evaluation/questions.jsonl`, `evaluation/expected_answers.jsonl` |
-| Evaluation run results | `evaluation/results/`, or the path given as argument; note for each file whether it comes from the fake model or a real model |
-| Automated test results | `reports/test-results/` |
-| Application configuration | `.env.example`, `pyproject.toml`, configuration module defined in `plan.md` (never read or print `.env` values) |
-| Langfuse trace summaries | `reports/langfuse/<run_id>/` exports only (EV-005); never query Langfuse directly |
+## Steps
 
-For each source, note: found / not found, path, timestamp, and number of records.
+Run the commands from the project root. The scripts use the Python standard library only
+(Python 3.11 or later); `uv run python` uses the project interpreter.
 
-## Step 2 - Decide which metrics apply
+### Step 1 - Collect evidence
 
-Go through the catalogue below. For each metric decide: **measured (script)**, **measured
-(human labels)**, **unavailable** (applicable but no evidence for the selected run), or
-**not applicable** (explain why). Use the definitions given; if `k` is used, state its value from configuration.
+```sh
+uv run python .agents/skills/rag-evaluation-report/scripts/collect_evidence.py --root .
+```
 
-Apply the metric catalogue (MC-001 to MC-032) and the Evaluation Methodology (EM-001 to EM-007) in `specs/spec.md`. In short:
+Writes `reports/rag-evaluation-evidence.json`: the SK-003 sources (path, existence, size,
+modification time, SHA-256, record count), the current commit and dirty flag, whether `.env`
+exists (never opened), known trace ids, and the secret scan (file, line, pattern name only).
+When the latest real run has no labels, it also writes the empty label template
+`evaluation/labels/<run_id>.template.jsonl`; mention it in the report.
 
-- Primary metric: correctness against expected answer points (MC-014). Guardrails:
-  unsupported-claim rate, abstention quality, citation validity, end-to-end latency,
-  tokens. Say which decision each metric supports.
-- Correctness is judged on answer points, never on word overlap (no BLEU/ROUGE as
-  correctness).
-- Deterministic script metrics first; metrics that need judgement come only from the human
-  labels in `evaluation/labels/`. No LLM judge in this version.
-- Below 10 questions, write rates as counts ("3/4") and call results indicative. Latency as
-  median and maximum (p95 only when n is at least 20), never a mean alone.
-- Report per question category (answerable, unanswerable, multi-source) and overall; never
-  mix fake-model and real-model runs; say if the evaluation questions were used for tuning.
+### Step 2 - Compute the metrics
 
-**Retrieval** (needs, per question, the ranked retrieved chunks and the expected sources)
+```sh
+uv run python .agents/skills/rag-evaluation-report/scripts/compute_metrics.py --root .
+```
 
-- Recall@k: share of expected source documents found in the top k.
-- Precision@k: share of the top k chunks that come from an expected source.
-- Hit Rate@k: share of questions expecting an answer (answerable and multi-source) with at
-  least one expected source in the top k.
-- MRR: mean of 1 / rank of the first relevant chunk (0 if none).
-- nDCG@k: discounted cumulative gain of relevant chunks, normalized by the ideal ranking.
-- Context relevance: share of retrieved chunks judged relevant to the question (needs a
-  human passage labels).
-- Chunk coverage: share of expected answer points supported by at least one retrieved chunk.
+Writes `reports/rag-evaluation-metrics.json`: the selected run (latest real-model run by
+`started_at`, other real runs listed, staleness warnings), all 32 metrics with status,
+value, numerator and denominator or per-question values and n, per-category slices,
+inputs, decision supported, reason, and collection plan; the test summary from the JUnit
+file with the FR-035 areas; the success-criteria verdicts; and fake-model runs separately.
+`scripts/summarize_langfuse.py` is used by this step to read the trace exports.
 
-**Generation / RAG quality**
+### Step 3 - Write the report
 
-- Faithfulness / groundedness: share of answer claims supported by the retrieved chunks.
-- Answer relevance: whether the answer addresses the question (human rating).
-- Context utilization: share of retrieved relevant chunks actually used (cited) in the answer.
-- Citation correctness: share of citations pointing to a retrieved chunk that supports the
-  cited claim.
-- Citation completeness: share of supported claims that carry a citation.
-- Unsupported-claim rate: share of answer claims with no supporting retrieved chunk.
+Copy `templates/rag-evaluation-report.template.md` to `reports/rag-evaluation-report.md`
+(tell the user if a previous report is overwritten) and fill each section by copying values
+from the two JSON files, following the guidance comments, then delete the comments.
 
-**Task outcome**
+- If `run.run_id` is null, say first that no real-model run exists; every real-run metric is
+  then unavailable (SK-008). If `run.staleness` is not empty, say so in the summary.
+- Section 3: the primary metric (MC-014) and its guardrails (MC-013, MC-015, MC-011,
+  MC-022, MC-023), each with the decision it supports (EM-001).
+- Section 4: one table per family; all 32 ids; rates as "numerator/denominator" (fewer than
+  10 questions: counts, not percentages, results indicative, EM-005); latency as median and
+  maximum. Add the per-category values (EM-007). State that retrieval relevance is judged at
+  document level and is optimistic (EM-002).
+- Section 9 is the only place where fake-model run ids and their metrics appear.
+- Section 10: one provenance row per value reported in sections 3 to 6 (metric, value,
+  source file, record or trace id, field).
+- Sections 11 to 14: limitations, data quality, privacy (MC-031 findings, MC-032 text from
+  `references/privacy.md`), and next experiments, each tied to an unavailable or weak
+  metric. Mention the tuning disclosure of `evaluation/README.md`.
 
-- Correctness against expected answer points: points covered / points expected, per
-  question and overall.
-- Abstention quality: unanswerable questions correctly answered with the safe "not found"
-  response, and answerable questions wrongly refused.
-- Human preference or rubric score: only if human ratings exist.
+### Step 4 - Self-check
 
-**Agent workflow** (mostly from Langfuse traces)
+```sh
+uv run python .agents/skills/rag-evaluation-report/scripts/check_report.py --root .
+```
 
-- Task success rate, tool/retrieval failure rate, number of retries, trace completeness
-  (share of runs whose trace contains every required observation), step latency,
-  end-to-end latency, cost/token usage.
+It fails if a number in sections 3 to 6 or 10 is not in the metrics file, a trace id is not
+in the evidence, an unavailable row has a value or no collection plan, a catalogue id is
+missing, a fake run id appears outside section 9, answer text is copied, or a section is
+missing. Fix the report and run it again until it prints "self-check passed". Never hand
+back a report whose self-check fails (SK-006).
 
-**Operations**
+### Step 5 - Hand back
 
-- Upload success rate, indexing latency, query throughput, error rate, resource usage.
-
-**Safety / privacy**
-
-- Prompt-injection detection rate (needs injection test cases), data leakage checks, secret
-  exposure (scan tracked files and exported traces; report file, line, pattern name only),
-  PII handling.
-
-## Step 3 - Compute
-
-- Never compute, estimate, or round a value yourself: all numbers come from the skill's
-  scripts (`reports/rag-evaluation-metrics.json`, SK-004 and SK-005). Until those scripts
-  exist, every metric is reported as unavailable.
-- Report per-question results for the evaluation dataset (question id, category, expected
-  sources, retrieved sources, cited sources, abstained or not, points covered).
-- State numerator and denominator for every rate. Below 10 questions, use counts and say
-  results are indicative; never declare two runs different on fewer than 10 questions.
-- Distinguish runs made with a deterministic fake model from runs made with a real model;
-  never mix them in one metric.
-
-## Step 4 - Write the report
-
-Write `reports/rag-evaluation-report.md` (create `reports/` if needed; overwrite a previous
-report only after telling the user). Use this structure and plain text only (no emojis):
-
-1. **Summary**: date, application version/commit, model and embedding configuration (names
-   only, no secrets), what was evaluated, headline findings.
-2. **Evidence inventory**: table of sources found / missing with paths and record counts.
-3. **Metrics**: start with the primary metric and its guardrails, then one table per family
-   with columns Metric | Status (measured / unavailable / not applicable) | Value | Sample
-   size | Source | Decision supported | How to collect (if unavailable).
-4. **Per-question results** for the evaluation dataset.
-5. **Langfuse observations**: trace ids used, completeness of traces, latency and token
-   figures as read (or "unavailable" with the reason).
-6. **Limitations**: dataset size, fake vs real model, label reliability, non-determinism.
-7. **Data-quality concerns**: sample knowledge, expected answers, labelling issues.
-8. **Privacy and security considerations**: what is traced and logged, secret scan result,
-   PII handling.
-9. **Recommended next experiments**: concrete, prioritized, each tied to an unavailable or
-   weak metric.
-
-## Step 5 - Hand back
-
-Tell the user the report path, how many metrics were measured versus unavailable, and the
-most important missing instrumentation. Do not claim more than the report contains.
+Tell the user: the report path, the selected run, how many metrics are measured by script,
+measured from human labels, unavailable, and not applicable (count the statuses in the
+metrics file listing; do not compute rates), the most important missing evidence and how to
+collect it, and whether a label template was written. Do not claim more than the report
+contains.
