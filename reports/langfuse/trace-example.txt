@@ -1,0 +1,16 @@
+Langfuse trace identifier from a successful question run (constitution gate 7, EV-005)
+
+Run: 20261125T231209Z-real (evaluation/results/20261125T231209Z-real.jsonl)
+Question: q2, "How quickly must a SEV1 incident be acknowledged, and when is the post-mortem due?"
+Status: answered
+Request id (Langfuse session id): 135e03cc1d8b452485d302ae027e17df
+Trace id: eb4f15b83930dac9033394359b2eac12
+Langfuse: Langfuse Cloud, US region (https://us.cloud.langfuse.com)
+Model: ollama/llama3.1:8b
+
+The trace contains the question and request id, the crew kickoff, the Retriever/Researcher
+and Answer/Verifier agent spans, the search_knowledge_base tool and retriever observations
+(files, chunk ids, scores), and two generations with model name and token usage. Its
+exported summary, with all nine FR-025 presence flags true, is
+reports/langfuse/20261125T231209Z-real/eb4f15b83930dac9033394359b2eac12.json; the five traces of the run are exported in
+the same directory.

@@ -1,0 +1,167 @@
+{
+  "generated_at": "2026-11-26T00:00:49.751799Z",
+  "git_commit": "67da617ca694",
+  "working_tree_dirty": false,
+  "files": [
+    {
+      "path": "specs/constitution.md",
+      "exists": true,
+      "size_bytes": 24041,
+      "modified_at": "2026-11-25T18:48:50.395242Z",
+      "sha256": "d39db81930d3c69da07a82bc16db46e7ee4b663a51e5e5f52d65e809b216c315",
+      "records": null
+    },
+    {
+      "path": "specs/spec.md",
+      "exists": true,
+      "size_bytes": 46839,
+      "modified_at": "2026-11-24T22:46:03.057955Z",
+      "sha256": "dc1ceeff4ff12040c8f783d5ed1eba56b0383f45f1f6023984654462bb329d55",
+      "records": null
+    },
+    {
+      "path": "specs/plan.md",
+      "exists": true,
+      "size_bytes": 11481,
+      "modified_at": "2026-11-25T23:11:38.458062Z",
+      "sha256": "9ef7a38334bc8593def1339af9473d291d30c6cbb2e4c75e6bbb035783c460f4",
+      "records": null
+    },
+    {
+      "path": "specs/tasks.md",
+      "exists": true,
+      "size_bytes": 39667,
+      "modified_at": "2026-11-25T23:11:38.458763Z",
+      "sha256": "3aa844fc06b50e35d8d363d1568da04d8517ce4e85c2017df6c5b41aad2ba8ae",
+      "records": null
+    },
+    {
+      "path": "reports/test-results/junit.xml",
+      "exists": true,
+      "size_bytes": 16137,
+      "modified_at": "2026-11-25T23:12:03.939600Z",
+      "sha256": "e701efb6e40cb00240fd2deec03460bcd26d748ca90268ad3a533f46f830d1e3",
+      "records": 136
+    },
+    {
+      "path": "evaluation/questions.jsonl",
+      "exists": true,
+      "size_bytes": 626,
+      "modified_at": "2026-11-25T19:58:41.074384Z",
+      "sha256": "8e83ddae4eee977749d1f0f0e87a4894d07a93bb3836d893b0796ab11e1aac29",
+      "records": 5
+    },
+    {
+      "path": "evaluation/expected_answers.jsonl",
+      "exists": true,
+      "size_bytes": 1652,
+      "modified_at": "2026-11-25T19:58:41.084974Z",
+      "sha256": "38a0f40296a6d1d505244f4c7c0d1929a2568c7ce283d7d44e1d3b4ab8349a0d",
+      "records": 5
+    },
+    {
+      "path": "evaluation/results/20261125T231207Z-fake.jsonl",
+      "exists": true,
+      "size_bytes": 6516,
+      "modified_at": "2026-11-25T23:12:07.327858Z",
+      "sha256": "c15d5df231432d183d1f1aef16c0fc824a5243c37b5a0ab11a4f807260bd9571",
+      "records": 6
+    },
+    {
+      "path": "evaluation/results/20261125T231209Z-real.jsonl",
+      "exists": true,
+      "size_bytes": 6873,
+      "modified_at": "2026-11-25T23:13:17.262769Z",
+      "sha256": "f657522cdb2faced198e046e4775f0265a57244f12adf0eb5856389246e7d537",
+      "records": 6
+    },
+    {
+      "path": "evaluation/labels/20261125T231209Z-real.jsonl",
+      "exists": true,
+      "size_bytes": 988,
+      "modified_at": "2026-11-25T23:14:07.027077Z",
+      "sha256": "c1c40477e07d5ede3cf97b116745ea7dfec0cb85175208cbb8913fac6db35221",
+      "records": 4
+    },
+    {
+      "path": ".env.example",
+      "exists": true,
+      "size_bytes": 734,
+      "modified_at": "2026-11-25T20:02:25.425540Z",
+      "sha256": "0def058d31581e27f7c3842c6622f1db3ad49a8005c681a9258393a0d1fc1153",
+      "records": null
+    },
+    {
+      "path": "pyproject.toml",
+      "exists": true,
+      "size_bytes": 914,
+      "modified_at": "2026-11-25T19:48:55.357038Z",
+      "sha256": "31bf622487b63ce70c2ac739e6a932a04f5efb796a8909017f24e895ba6971c1",
+      "records": null
+    },
+    {
+      "path": "reports/langfuse/20261125T231209Z-real/0469742eb4e2ec42b9cceed1dd686c62.json",
+      "exists": true,
+      "size_bytes": 2231,
+      "modified_at": "2026-11-25T23:13:58.798279Z",
+      "sha256": "57ec836d24a29d7a1ebd96e245f91c03c8ed0ad67cbfe6b49252bf2e3c5f752d",
+      "records": null
+    },
+    {
+      "path": "reports/langfuse/20261125T231209Z-real/1794410e4cf4054f5be28d644434452d.json",
+      "exists": true,
+      "size_bytes": 2225,
+      "modified_at": "2026-11-25T23:13:50.755037Z",
+      "sha256": "4b1163b5d62697ad4bcf655f021d90bf22deabc0d4e58447eb0c6d95c8da0346",
+      "records": null
+    },
+    {
+      "path": "reports/langfuse/20261125T231209Z-real/34799505bd59970462d19f68b441d672.json",
+      "exists": true,
+      "size_bytes": 2231,
+      "modified_at": "2026-11-25T23:13:30.930949Z",
+      "sha256": "f058d305c15a4cc7ef7ce674b37e950fb931a99db377f19051823d97a8bf78d4",
+      "records": null
+    },
+    {
+      "path": "reports/langfuse/20261125T231209Z-real/9111307c05aafd7ba614125d47dc06b2.json",
+      "exists": true,
+      "size_bytes": 2231,
+      "modified_at": "2026-11-25T23:13:44.045017Z",
+      "sha256": "e4b92e82a0bde5f91ba79f6501488d7fa8cbad57383d5b733f713c24579d46a8",
+      "records": null
+    },
+    {
+      "path": "reports/langfuse/20261125T231209Z-real/eb4f15b83930dac9033394359b2eac12.json",
+      "exists": true,
+      "size_bytes": 2231,
+      "modified_at": "2026-11-25T23:13:37.166235Z",
+      "sha256": "2dca68db9d77538b4a90dfaaa5031c473586a808a8dc22bd57c70793bee6cc37",
+      "records": null
+    }
+  ],
+  "env_file_present": true,
+  "trace_ids": [
+    "0469742eb4e2ec42b9cceed1dd686c62",
+    "135e03cc1d8b452485d302ae027e17df",
+    "1794410e4cf4054f5be28d644434452d",
+    "34799505bd59970462d19f68b441d672",
+    "9111307c05aafd7ba614125d47dc06b2",
+    "eb4f15b83930dac9033394359b2eac12"
+  ],
+  "label_template": null,
+  "secret_scan": {
+    "files_scanned": 79,
+    "patterns": [
+      "anthropic_api_key",
+      "assigned_secret",
+      "aws_access_key_id",
+      "bearer_token",
+      "langfuse_public_key",
+      "langfuse_secret_key",
+      "openai_api_key",
+      "private_key_block"
+    ],
+    "findings": []
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "trace_id": "34799505bd59970462d19f68b441d672",
+  "request_id": "fb61bf60e6104320aee796e09bfacbcb",
+  "model": "llama3.1:8b",
+  "observations": [
+    {
+      "name": "llm-call: Answer/Verifier",
+      "type": "generation",
+      "status": "ok",
+      "duration_ms": 12499,
+      "prompt_tokens": 1519,
+      "completion_tokens": 106,
+      "cost": null
+    },
+    {
+      "name": "Answer/Verifier._execute_core",
+      "type": "agent",
+      "status": "ok",
+      "duration_ms": 12520,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "search_knowledge_base",
+      "type": "retriever",
+      "status": "ok",
+      "duration_ms": 143,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "search_knowledge_base.run",
+      "type": "tool",
+      "status": "ok",
+      "duration_ms": 145,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "llm-call: Retriever/Researcher",
+      "type": "generation",
+      "status": "ok",
+      "duration_ms": 2761,
+      "prompt_tokens": 383,
+      "completion_tokens": 38,
+      "cost": null
+    },
+    {
+      "name": "Retriever/Researcher._execute_core",
+      "type": "agent",
+      "status": "ok",
+      "duration_ms": 2922,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "Crew_ad02b438-37fc-4fce-8565-56a2ec1346c5.kickoff",
+      "type": "chain",
+      "status": "ok",
+      "duration_ms": 15467,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    },
+    {
+      "name": "rag-question",
+      "type": "span",
+      "status": "ok",
+      "duration_ms": 15484,
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "cost": null
+    }
+  ],
+  "retry_count": 0,
+  "presence": {
+    "has_question": true,
+    "has_request_id": true,
+    "has_agent_task_spans": true,
+    "has_retrieval_metadata": true,
+    "has_generation_io": true,
+    "has_model_name": true,
+    "has_token_usage": true,
+    "has_latency_and_status": true,
+    "has_error_if_failed": true
+  },
+  "exported_at": "2026-11-25T23:13:30.929757Z"
+}

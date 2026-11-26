@@ -1,0 +1,1593 @@
+{
+  "run": {
+    "run_id": "20261125T231209Z-real",
+    "model": "ollama/llama3.1:8b",
+    "model_kind": "real",
+    "k": 5,
+    "git_commit": "67da617ca694",
+    "other_runs": [],
+    "embedding_model": "chroma-onnx/all-MiniLM-L6-v2",
+    "min_relevance_score": 0.35,
+    "started_at": "2026-11-25T23:12:09.423223Z",
+    "questions": 5,
+    "path": "evaluation/results/20261125T231209Z-real.jsonl",
+    "staleness": [],
+    "per_question": [
+      {
+        "id": "q1",
+        "category": "answerable",
+        "status": "answered",
+        "expected_sources": [
+          "model-monitoring-guide.md"
+        ],
+        "retrieved_files": [
+          "data-retention-policy.pdf",
+          "incident-runbook.txt",
+          "model-monitoring-guide.md"
+        ],
+        "cited_files": [
+          "model-monitoring-guide.md"
+        ],
+        "guardrail_decision": "passed",
+        "citations_removed": 0,
+        "latency_ms": 15483,
+        "trace_id": "34799505bd59970462d19f68b441d672"
+      },
+      {
+        "id": "q2",
+        "category": "answerable",
+        "status": "answered",
+        "expected_sources": [
+          "incident-runbook.txt"
+        ],
+        "retrieved_files": [
+          "data-retention-policy.pdf",
+          "incident-runbook.txt",
+          "model-monitoring-guide.md"
+        ],
+        "cited_files": [
+          "incident-runbook.txt"
+        ],
+        "guardrail_decision": "passed",
+        "citations_removed": 0,
+        "latency_ms": 13394,
+        "trace_id": "eb4f15b83930dac9033394359b2eac12"
+      },
+      {
+        "id": "q3",
+        "category": "answerable",
+        "status": "answered",
+        "expected_sources": [
+          "data-retention-policy.pdf"
+        ],
+        "retrieved_files": [
+          "data-retention-policy.pdf",
+          "incident-runbook.txt",
+          "model-monitoring-guide.md"
+        ],
+        "cited_files": [
+          "data-retention-policy.pdf"
+        ],
+        "guardrail_decision": "passed",
+        "citations_removed": 0,
+        "latency_ms": 15204,
+        "trace_id": "9111307c05aafd7ba614125d47dc06b2"
+      },
+      {
+        "id": "q4",
+        "category": "unanswerable",
+        "status": "abstained",
+        "expected_sources": [],
+        "retrieved_files": [
+          "data-retention-policy.pdf",
+          "incident-runbook.txt",
+          "model-monitoring-guide.md"
+        ],
+        "cited_files": [],
+        "guardrail_decision": "safe_response",
+        "citations_removed": 0,
+        "latency_ms": 6834,
+        "trace_id": "1794410e4cf4054f5be28d644434452d"
+      },
+      {
+        "id": "q5",
+        "category": "multi_source",
+        "status": "answered",
+        "expected_sources": [
+          "model-monitoring-guide.md",
+          "incident-runbook.txt"
+        ],
+        "retrieved_files": [
+          "incident-runbook.txt",
+          "model-monitoring-guide.md"
+        ],
+        "cited_files": [
+          "incident-runbook.txt",
+          "model-monitoring-guide.md"
+        ],
+        "guardrail_decision": "passed",
+        "citations_removed": 0,
+        "latency_ms": 15327,
+        "trace_id": "0469742eb4e2ec42b9cceed1dd686c62"
+      }
+    ]
+  },
+  "metrics": [
+    {
+      "id": "MC-001",
+      "name": "Hit Rate@k",
+      "family": "Retrieval",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": 4,
+      "denominator": 4,
+      "per_question": null,
+      "n": null,
+      "per_category": {
+        "answerable": {
+          "value": 1.0,
+          "numerator": 3,
+          "denominator": 3
+        },
+        "multi_source": {
+          "value": 1.0,
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "tune k, chunking, or the embedding model",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-002",
+      "name": "Recall@k (document level)",
+      "family": "Retrieval",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 1.0,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 1.0
+      },
+      "n": 4,
+      "per_category": {
+        "answerable": {
+          "value": 1.0,
+          "n": 3
+        },
+        "multi_source": {
+          "value": 1.0,
+          "n": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "tune k or chunking",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-003",
+      "name": "Precision@k",
+      "family": "Retrieval",
+      "status": "measured (script)",
+      "value": 0.6,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 0.6,
+        "q2": 0.4,
+        "q3": 0.4,
+        "q5": 1.0
+      },
+      "n": 4,
+      "per_category": {
+        "answerable": {
+          "value": 0.4667,
+          "n": 3
+        },
+        "multi_source": {
+          "value": 1.0,
+          "n": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "lower k or raise the minimum relevance score",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-004",
+      "name": "MRR",
+      "family": "Retrieval",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 1.0,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 1.0
+      },
+      "n": 4,
+      "per_category": {
+        "answerable": {
+          "value": 1.0,
+          "n": 3
+        },
+        "multi_source": {
+          "value": 1.0,
+          "n": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "change the embedding model or add reranking",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-005",
+      "name": "nDCG@k",
+      "family": "Retrieval",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 1.0,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 1.0
+      },
+      "n": 4,
+      "per_category": {
+        "answerable": {
+          "value": 1.0,
+          "n": 3
+        },
+        "multi_source": {
+          "value": 1.0,
+          "n": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "compare retrieval configurations",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-006",
+      "name": "Context relevance",
+      "family": "Retrieval",
+      "status": "unavailable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [],
+      "decision": "tune the minimum relevance score",
+      "reason": "needs passage-level relevance labels; at document level it equals MC-003",
+      "collection_plan": "Add passage-level relevance labels (relevant or not, per retrieved chunk) to the label file; at document level this metric would equal MC-003."
+    },
+    {
+      "id": "MC-007",
+      "name": "Chunk coverage",
+      "family": "Retrieval",
+      "status": "unavailable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [],
+      "decision": "change chunk size or overlap",
+      "reason": "needs point-to-chunk labels",
+      "collection_plan": "Add point-to-chunk labels: for each answer point, the retrieved chunk ids that support it."
+    },
+    {
+      "id": "MC-008",
+      "name": "Faithfulness / groundedness",
+      "family": "Generation",
+      "status": "measured (human labels)",
+      "value": 1.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 1.0,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 1.0
+      },
+      "n": 4,
+      "per_category": null,
+      "details": {
+        "excluded_zero_denominator": []
+      },
+      "inputs": [
+        "evaluation/labels/20261125T231209Z-real.jsonl",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "strengthen the guardrail or prompts",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-009",
+      "name": "Answer relevance",
+      "family": "Generation",
+      "status": "measured (human labels)",
+      "value": 4.25,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 4.0,
+        "q2": 5.0,
+        "q3": 4.0,
+        "q5": 4.0
+      },
+      "n": 4,
+      "per_category": null,
+      "details": {
+        "excluded_zero_denominator": []
+      },
+      "inputs": [
+        "evaluation/labels/20261125T231209Z-real.jsonl",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "revise the Answer/Verifier task",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-010",
+      "name": "Context utilization",
+      "family": "Generation",
+      "status": "measured (script)",
+      "value": 0.7667,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 0.6667,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 0.4
+      },
+      "n": 4,
+      "per_category": {
+        "answerable": {
+          "value": 0.8889,
+          "n": 3
+        },
+        "multi_source": {
+          "value": 0.4,
+          "n": 1
+        }
+      },
+      "details": {
+        "answered_with_expected_source_cited": 4,
+        "answered_expecting_answer": 4
+      },
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "revise the citation instructions",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-011",
+      "name": "Citation correctness",
+      "family": "Generation",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": 8,
+      "denominator": 8,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": {
+        "validity": {
+          "value": 1.0,
+          "numerator": 8,
+          "denominator": 8
+        },
+        "citations_removed_total": 0,
+        "support": {
+          "status": "measured (human labels)",
+          "value": 1.0,
+          "numerator": 9,
+          "denominator": 9
+        }
+      },
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/labels/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "strengthen the citation guardrail",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-012",
+      "name": "Citation completeness",
+      "family": "Generation",
+      "status": "measured (human labels)",
+      "value": 1.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 1.0,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 1.0
+      },
+      "n": 4,
+      "per_category": null,
+      "details": {
+        "excluded_zero_denominator": []
+      },
+      "inputs": [
+        "evaluation/labels/20261125T231209Z-real.jsonl",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "require a citation per statement",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-013",
+      "name": "Unsupported-claim rate",
+      "family": "Generation",
+      "status": "measured (human labels)",
+      "value": 0.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 0.0,
+        "q2": 0.0,
+        "q3": 0.0,
+        "q5": 0.0
+      },
+      "n": 4,
+      "per_category": null,
+      "details": {
+        "excluded_zero_denominator": []
+      },
+      "inputs": [
+        "evaluation/labels/20261125T231209Z-real.jsonl",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "strengthen the guardrail or change model",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-014",
+      "name": "Correctness against answer points",
+      "family": "Task outcome",
+      "status": "measured (human labels)",
+      "value": 0.9167,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 1.0,
+        "q2": 1.0,
+        "q3": 1.0,
+        "q5": 0.6667
+      },
+      "n": 4,
+      "per_category": null,
+      "details": null,
+      "inputs": [
+        "evaluation/labels/20261125T231209Z-real.jsonl",
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "release or change model",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-015",
+      "name": "Abstention quality",
+      "family": "Task outcome",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": 5,
+      "denominator": 5,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": {
+        "abstained_when_abstention_expected": 1,
+        "answered_when_answer_expected": 4,
+        "abstained_when_answer_expected": 0,
+        "answered_when_abstention_expected": 0,
+        "failed": 0
+      },
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "evaluation/questions.jsonl",
+        "evaluation/expected_answers.jsonl"
+      ],
+      "decision": "tune the minimum relevance score or prompts",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-016",
+      "name": "Human rubric score",
+      "family": "Task outcome",
+      "status": "measured (human labels)",
+      "value": 4.0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 4.0,
+        "q2": 5.0,
+        "q3": 4.0,
+        "q5": 3.0
+      },
+      "n": 4,
+      "per_category": null,
+      "details": {
+        "excluded_zero_denominator": []
+      },
+      "inputs": [
+        "evaluation/labels/20261125T231209Z-real.jsonl",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "compare releases with a human view",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-017",
+      "name": "Task success rate",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": 5,
+      "denominator": 5,
+      "per_question": null,
+      "n": null,
+      "per_category": {
+        "answerable": {
+          "value": 1.0,
+          "numerator": 3,
+          "denominator": 3
+        },
+        "unanswerable": {
+          "value": 1.0,
+          "numerator": 1,
+          "denominator": 1
+        },
+        "multi_source": {
+          "value": 1.0,
+          "numerator": 1,
+          "denominator": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "fix failing steps before tuning quality",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-018",
+      "name": "Tool / retrieval failure rate",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 5,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "fix the retrieval tool or store",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-019",
+      "name": "Number of retries",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": 0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q5": 0,
+        "q4": 0,
+        "q1": 0,
+        "q3": 0,
+        "q2": 0
+      },
+      "n": 5,
+      "per_category": null,
+      "details": null,
+      "inputs": [
+        "reports/langfuse/20261125T231209Z-real/",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "tune structured-output prompts or model",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-020",
+      "name": "Trace completeness",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": 5,
+      "denominator": 5,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": {
+        "exported_traces": 5,
+        "questions_without_trace_id": 0
+      },
+      "inputs": [
+        "reports/langfuse/20261125T231209Z-real/",
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "fix instrumentation gaps",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-021",
+      "name": "Step latency",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": 5,
+      "per_category": null,
+      "details": {
+        "agent task: Answer/Verifier": {
+          "median_ms": 12520,
+          "max_ms": 13119,
+          "n": 5
+        },
+        "agent task: Retriever/Researcher": {
+          "median_ms": 2224,
+          "max_ms": 2922,
+          "n": 5
+        },
+        "crew kickoff": {
+          "median_ms": 15198,
+          "max_ms": 15467,
+          "n": 5
+        },
+        "generation: Answer/Verifier": {
+          "median_ms": 12499,
+          "max_ms": 13099,
+          "n": 5
+        },
+        "generation: Retriever/Researcher": {
+          "median_ms": 2043,
+          "max_ms": 2761,
+          "n": 5
+        },
+        "rag-question": {
+          "median_ms": 15204,
+          "max_ms": 15484,
+          "n": 5
+        },
+        "search_knowledge_base": {
+          "median_ms": 161,
+          "max_ms": 199,
+          "n": 5
+        },
+        "search_knowledge_base.run": {
+          "median_ms": 162,
+          "max_ms": 200,
+          "n": 5
+        }
+      },
+      "inputs": [
+        "reports/langfuse/20261125T231209Z-real/"
+      ],
+      "decision": "find the slowest step",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-022",
+      "name": "End-to-end latency",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": 15483,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": 15483,
+        "q2": 13394,
+        "q3": 15204,
+        "q4": 6834,
+        "q5": 15327
+      },
+      "n": 5,
+      "per_category": {
+        "answerable": {
+          "value": 15204.0,
+          "n": 3,
+          "max_ms": 15483
+        },
+        "unanswerable": {
+          "value": 6834.0,
+          "n": 1,
+          "max_ms": 6834
+        },
+        "multi_source": {
+          "value": 15327.0,
+          "n": 1,
+          "max_ms": 15327
+        }
+      },
+      "details": {
+        "median_ms": 15204.0,
+        "max_ms": 15483,
+        "p95_ms": null
+      },
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "choose model size or hardware",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-023",
+      "name": "Cost / token usage",
+      "family": "Agent workflow",
+      "status": "measured (script)",
+      "value": 8888,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "q1": {
+          "prompt_tokens": 1902,
+          "completion_tokens": 144
+        },
+        "q2": {
+          "prompt_tokens": 1582,
+          "completion_tokens": 142
+        },
+        "q3": {
+          "prompt_tokens": 1646,
+          "completion_tokens": 176
+        },
+        "q4": {
+          "prompt_tokens": 1177,
+          "completion_tokens": 45
+        },
+        "q5": {
+          "prompt_tokens": 1921,
+          "completion_tokens": 153
+        }
+      },
+      "n": 5,
+      "per_category": null,
+      "details": {
+        "prompt_tokens_total": 8228,
+        "completion_tokens_total": 660,
+        "cost_total": null,
+        "cost_status": "unavailable: no Langfuse cost field (local model has no price)"
+      },
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl",
+        "reports/langfuse/20261125T231209Z-real/"
+      ],
+      "decision": "shorten prompts or reduce k",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-024",
+      "name": "Upload success rate",
+      "family": "Operations",
+      "status": "measured (script)",
+      "value": 1.0,
+      "numerator": 3,
+      "denominator": 3,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "fix parsing of failing files",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-025",
+      "name": "Indexing latency",
+      "family": "Operations",
+      "status": "measured (script)",
+      "value": 420,
+      "numerator": null,
+      "denominator": null,
+      "per_question": {
+        "data-retention-policy.pdf": 133,
+        "incident-runbook.txt": 128,
+        "model-monitoring-guide.md": 157
+      },
+      "n": 3,
+      "per_category": null,
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "batch embeddings or change model",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-026",
+      "name": "Query throughput",
+      "family": "Operations",
+      "status": "unavailable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [],
+      "decision": "size hardware for concurrent users",
+      "reason": "query throughput is not instrumented",
+      "collection_plan": "Add a load test that sends questions concurrently and records questions per minute."
+    },
+    {
+      "id": "MC-027",
+      "name": "Error rate",
+      "family": "Operations",
+      "status": "measured (script)",
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 5,
+      "per_question": null,
+      "n": null,
+      "per_category": {
+        "answerable": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 3
+        },
+        "unanswerable": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 1
+        },
+        "multi_source": {
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "details": null,
+      "inputs": [
+        "evaluation/results/20261125T231209Z-real.jsonl"
+      ],
+      "decision": "fix failing steps before tuning quality",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-028",
+      "name": "Resource usage",
+      "family": "Operations",
+      "status": "unavailable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [],
+      "decision": "size hardware",
+      "reason": "resource usage is not instrumented",
+      "collection_plan": "Record CPU and memory during indexing and answering (for example with psutil) in the run header."
+    },
+    {
+      "id": "MC-029",
+      "name": "Prompt-injection detection rate",
+      "family": "Safety / privacy",
+      "status": "unavailable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [],
+      "decision": "harden prompts and guardrail",
+      "reason": "the dataset has no prompt-injection test cases",
+      "collection_plan": "Add documents and questions containing injection attempts to the dataset with expected safe behavior."
+    },
+    {
+      "id": "MC-030",
+      "name": "Data leakage checks",
+      "family": "Safety / privacy",
+      "status": "unavailable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [],
+      "decision": "harden the guardrail",
+      "reason": "the dataset has no data-leakage test cases",
+      "collection_plan": "Add test cases whose answers must not contain content from outside the retrieved chunks."
+    },
+    {
+      "id": "MC-031",
+      "name": "Secret exposure",
+      "family": "Safety / privacy",
+      "status": "measured (script)",
+      "value": 0,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": 79,
+      "per_category": null,
+      "details": {
+        "findings": [],
+        "patterns": [
+          "anthropic_api_key",
+          "assigned_secret",
+          "aws_access_key_id",
+          "bearer_token",
+          "langfuse_public_key",
+          "langfuse_secret_key",
+          "openai_api_key",
+          "private_key_block"
+        ]
+      },
+      "inputs": [
+        "reports/rag-evaluation-evidence.json"
+      ],
+      "decision": "remove and rotate exposed secrets",
+      "reason": null,
+      "collection_plan": null
+    },
+    {
+      "id": "MC-032",
+      "name": "PII handling",
+      "family": "Safety / privacy",
+      "status": "not applicable",
+      "value": null,
+      "numerator": null,
+      "denominator": null,
+      "per_question": null,
+      "n": null,
+      "per_category": null,
+      "details": null,
+      "inputs": [
+        "specs/spec.md",
+        ".env.example"
+      ],
+      "decision": "decide what may be traced and logged",
+      "reason": "reported as text: what personal data is traced, logged, and stored",
+      "collection_plan": null
+    }
+  ],
+  "tests": {
+    "available": true,
+    "passed": 136,
+    "failed": 0,
+    "skipped": 0,
+    "duration_s": 7.92,
+    "fr035_areas": {
+      "1. file type and empty-file validation": {
+        "modules": [
+          "test_ingestion_validation"
+        ],
+        "passed": 14,
+        "failed": 0
+      },
+      "2. chunking and metadata preservation": {
+        "modules": [
+          "test_chunking"
+        ],
+        "passed": 4,
+        "failed": 0
+      },
+      "3. retrieval of relevant evidence": {
+        "modules": [
+          "test_retrieval"
+        ],
+        "passed": 5,
+        "failed": 0
+      },
+      "4. cautious answer for an unknown question": {
+        "modules": [
+          "test_crew_stub",
+          "test_guardrail"
+        ],
+        "passed": 13,
+        "failed": 0
+      },
+      "5. source references when evidence is available": {
+        "modules": [
+          "test_crew_stub"
+        ],
+        "passed": 5,
+        "failed": 0
+      },
+      "6. observability disabled or mocked": {
+        "modules": [
+          "test_observability"
+        ],
+        "passed": 8,
+        "failed": 0
+      },
+      "7. smoke test of the main path": {
+        "modules": [
+          "test_smoke"
+        ],
+        "passed": 1,
+        "failed": 0
+      }
+    },
+    "source": "reports/test-results/junit.xml"
+  },
+  "success_criteria": [
+    {
+      "id": "SC-003",
+      "target": "total indexing time < 60000 ms",
+      "measured": 420,
+      "verdict": "met",
+      "metric": "MC-025"
+    },
+    {
+      "id": "SC-004",
+      "target": "every answerable and multi-source question retrieves an expected source",
+      "measured": "4/4",
+      "verdict": "met",
+      "metric": "MC-001"
+    },
+    {
+      "id": "SC-005",
+      "target": "each answered question cites an expected source",
+      "measured": "4/4",
+      "verdict": "met",
+      "metric": "MC-010"
+    },
+    {
+      "id": "SC-006",
+      "target": "unanswerable questions receive the safe response",
+      "measured": "1/1",
+      "verdict": "met",
+      "metric": "MC-015"
+    },
+    {
+      "id": "SC-007",
+      "target": "one complete trace per question (real Langfuse)",
+      "measured": "5/5",
+      "verdict": "met",
+      "metric": "MC-020"
+    },
+    {
+      "id": "SC-008",
+      "target": "max end-to-end latency < 30000 ms",
+      "measured": 15483,
+      "verdict": "met",
+      "metric": "MC-022"
+    }
+  ],
+  "fake_runs": [
+    {
+      "run_id": "20261125T231207Z-fake",
+      "path": "evaluation/results/20261125T231207Z-fake.jsonl",
+      "metrics": [
+        {
+          "id": "MC-001",
+          "name": "Hit Rate@k",
+          "family": "Retrieval",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": 4,
+          "denominator": 4,
+          "per_question": null,
+          "n": null,
+          "per_category": {
+            "answerable": {
+              "value": 1.0,
+              "numerator": 3,
+              "denominator": 3
+            },
+            "multi_source": {
+              "value": 1.0,
+              "numerator": 1,
+              "denominator": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "tune k, chunking, or the embedding model",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-002",
+          "name": "Recall@k (document level)",
+          "family": "Retrieval",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "q1": 1.0,
+            "q2": 1.0,
+            "q3": 1.0,
+            "q5": 1.0
+          },
+          "n": 4,
+          "per_category": {
+            "answerable": {
+              "value": 1.0,
+              "n": 3
+            },
+            "multi_source": {
+              "value": 1.0,
+              "n": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "tune k or chunking",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-003",
+          "name": "Precision@k",
+          "family": "Retrieval",
+          "status": "measured (script)",
+          "value": 0.5,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "q1": 0.4,
+            "q2": 0.4,
+            "q3": 0.4,
+            "q5": 0.8
+          },
+          "n": 4,
+          "per_category": {
+            "answerable": {
+              "value": 0.4,
+              "n": 3
+            },
+            "multi_source": {
+              "value": 0.8,
+              "n": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "lower k or raise the minimum relevance score",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-004",
+          "name": "MRR",
+          "family": "Retrieval",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "q1": 1.0,
+            "q2": 1.0,
+            "q3": 1.0,
+            "q5": 1.0
+          },
+          "n": 4,
+          "per_category": {
+            "answerable": {
+              "value": 1.0,
+              "n": 3
+            },
+            "multi_source": {
+              "value": 1.0,
+              "n": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "change the embedding model or add reranking",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-005",
+          "name": "nDCG@k",
+          "family": "Retrieval",
+          "status": "measured (script)",
+          "value": 0.8878,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "q1": 0.7654,
+            "q2": 1.0,
+            "q3": 1.0,
+            "q5": 0.786
+          },
+          "n": 4,
+          "per_category": {
+            "answerable": {
+              "value": 0.9218,
+              "n": 3
+            },
+            "multi_source": {
+              "value": 0.786,
+              "n": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "compare retrieval configurations",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-010",
+          "name": "Context utilization",
+          "family": "Generation",
+          "status": "measured (script)",
+          "value": 0.5,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "q1": 0.5,
+            "q2": 0.5,
+            "q3": 0.5,
+            "q5": 0.5
+          },
+          "n": 4,
+          "per_category": {
+            "answerable": {
+              "value": 0.5,
+              "n": 3
+            },
+            "multi_source": {
+              "value": 0.5,
+              "n": 1
+            }
+          },
+          "details": {
+            "answered_with_expected_source_cited": 4,
+            "answered_expecting_answer": 4
+          },
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "revise the citation instructions",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-011",
+          "name": "Citation correctness",
+          "family": "Generation",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": 7,
+          "denominator": 7,
+          "per_question": null,
+          "n": null,
+          "per_category": null,
+          "details": {
+            "validity": {
+              "value": 1.0,
+              "numerator": 7,
+              "denominator": 7
+            },
+            "citations_removed_total": 0,
+            "support": null
+          },
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "strengthen the citation guardrail",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-015",
+          "name": "Abstention quality",
+          "family": "Task outcome",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": 5,
+          "denominator": 5,
+          "per_question": null,
+          "n": null,
+          "per_category": null,
+          "details": {
+            "abstained_when_abstention_expected": 1,
+            "answered_when_answer_expected": 4,
+            "abstained_when_answer_expected": 0,
+            "answered_when_abstention_expected": 0,
+            "failed": 0
+          },
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl",
+            "evaluation/questions.jsonl",
+            "evaluation/expected_answers.jsonl"
+          ],
+          "decision": "tune the minimum relevance score or prompts",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-017",
+          "name": "Task success rate",
+          "family": "Agent workflow",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": 5,
+          "denominator": 5,
+          "per_question": null,
+          "n": null,
+          "per_category": {
+            "answerable": {
+              "value": 1.0,
+              "numerator": 3,
+              "denominator": 3
+            },
+            "unanswerable": {
+              "value": 1.0,
+              "numerator": 1,
+              "denominator": 1
+            },
+            "multi_source": {
+              "value": 1.0,
+              "numerator": 1,
+              "denominator": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "fix failing steps before tuning quality",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-018",
+          "name": "Tool / retrieval failure rate",
+          "family": "Agent workflow",
+          "status": "measured (script)",
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 5,
+          "per_question": null,
+          "n": null,
+          "per_category": null,
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "fix the retrieval tool or store",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-022",
+          "name": "End-to-end latency",
+          "family": "Agent workflow",
+          "status": "measured (script)",
+          "value": 47,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "q1": 47,
+            "q2": 23,
+            "q3": 23,
+            "q4": 25,
+            "q5": 30
+          },
+          "n": 5,
+          "per_category": {
+            "answerable": {
+              "value": 23.0,
+              "n": 3,
+              "max_ms": 47
+            },
+            "unanswerable": {
+              "value": 25.0,
+              "n": 1,
+              "max_ms": 25
+            },
+            "multi_source": {
+              "value": 30.0,
+              "n": 1,
+              "max_ms": 30
+            }
+          },
+          "details": {
+            "median_ms": 25.0,
+            "max_ms": 47,
+            "p95_ms": null
+          },
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "choose model size or hardware",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-027",
+          "name": "Error rate",
+          "family": "Operations",
+          "status": "measured (script)",
+          "value": 0.0,
+          "numerator": 0,
+          "denominator": 5,
+          "per_question": null,
+          "n": null,
+          "per_category": {
+            "answerable": {
+              "value": 0.0,
+              "numerator": 0,
+              "denominator": 3
+            },
+            "unanswerable": {
+              "value": 0.0,
+              "numerator": 0,
+              "denominator": 1
+            },
+            "multi_source": {
+              "value": 0.0,
+              "numerator": 0,
+              "denominator": 1
+            }
+          },
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "fix failing steps before tuning quality",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-024",
+          "name": "Upload success rate",
+          "family": "Operations",
+          "status": "measured (script)",
+          "value": 1.0,
+          "numerator": 3,
+          "denominator": 3,
+          "per_question": null,
+          "n": null,
+          "per_category": null,
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "fix parsing of failing files",
+          "reason": null,
+          "collection_plan": null
+        },
+        {
+          "id": "MC-025",
+          "name": "Indexing latency",
+          "family": "Operations",
+          "status": "measured (script)",
+          "value": 46,
+          "numerator": null,
+          "denominator": null,
+          "per_question": {
+            "data-retention-policy.pdf": 27,
+            "incident-runbook.txt": 6,
+            "model-monitoring-guide.md": 12
+          },
+          "n": 3,
+          "per_category": null,
+          "details": null,
+          "inputs": [
+            "evaluation/results/20261125T231207Z-fake.jsonl"
+          ],
+          "decision": "batch embeddings or change model",
+          "reason": null,
+          "collection_plan": null
+        }
+      ]
+    }
+  ],
+  "primary_metric": "MC-014",
+  "guardrail_metrics": [
+    "MC-013",
+    "MC-015",
+    "MC-011",
+    "MC-022",
+    "MC-023"
+  ]
+}
